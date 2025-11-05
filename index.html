@@ -2,49 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Traffic Camera 2701 (Woodlands)</title>
+  <title>Singapore Traffic Cameras</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    .camera { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    img { max-width: 100%; height: auto; border: 1px solid #ccc; margin-top: 10px; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .camera { margin-bottom: 20px; }
+    img { max-width: 100%; height: auto; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
-  <h1>Live Traffic Camera – Woodlands (ID: 2701)</h1>
-  <div id="cameraContainer">Loading camera feed...</div>
+  <h1>Live Traffic Cameras (Singapore)</h1>
+  <div id="cameraContainer"></div>
 
   <script>
-    async function fetchCamera2701() {
-      try {
-        const response = await fetch('https://api.data.gov.sg/v1/transport/traffic-images');
-        const data = await response.json();
-        const cameras = data.items[0].cameras;
-        const camera = cameras.find(cam => cam.camera_id === "2701");
+    async function fetchTrafficImages() {
+      const response = await fetch('https://api.data.gov.sg/v1/transport/traffic-images');
+      const data = await response.json();
+      const cameras = data.items[0].cameras;
 
-        const container = document.getElementById('cameraContainer');
-        container.innerHTML = '';
+      const container = document.getElementById('cameraContainer');
+      container.innerHTML = '';
 
-        if (camera) {
-          const camDiv = document.createElement('div');
-          camDiv.className = 'camera';
-          camDiv.innerHTML = `
-            <h2>Camera ID: ${camera.camera_id}</h2>
-            <p>Location: (${camera.location.latitude}, ${camera.location.longitude})</p>
-            <img src="${camera.image}" alt="Traffic camera ${camera.camera_id}">
-            <p>Timestamp: ${camera.timestamp}</p>
-          `;
-          container.appendChild(camDiv);
-        } else {
-          container.innerHTML = '<p>Camera ID 2701 not found.</p>';
-        }
-      } catch (error) {
-        document.getElementById('cameraContainer').innerHTML = `<p>Error fetching data: ${error.message}</p>`;
-      }
+      cameras.forEach(cam => {
+        const camDiv = document.createElement('div');
+        camDiv.className = 'camera';
+        camDiv.innerHTML = `
+          <h3>Camera ID: ${cam.camera_id}</h3>
+          <p>Location: (${cam.location.latitude}, ${cam.location.longitude})</p>
+          <img src="${cam.image}" alt="Traffic camera ${cam.camera_id}">
+          <p>Timestamp: ${cam.timestamp}</p>
+        `;
+        container.appendChild(camDiv);
+      });
     }
 
-    // Initial fetch and refresh every 60 seconds
-    fetchCamera2701();
-    setInterval(fetchCamera2701, 60000);
+    // Refresh every 60 seconds
+    fetchTrafficImages();
+    setInterval(fetchTrafficImages, 60000);
   </script>
 </body>
-</html>      
+</html>
