@@ -175,6 +175,51 @@
     fetchSelectedCameras(["2701", "2702"]);
     setInterval(() => fetchSelectedCameras(["2701", "2702"]), 60000);
   </script>
+
+   <script src="js/script.js"></script>
+
+  <script>
+
+    // Smooth scroll for nav links
+ 
+  document.getElementById('contactForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const msgDiv = document.getElementById('form-message');
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const message = form.message.value.trim();
+
+  msgDiv.textContent = '';
+  msgDiv.style.color = 'red';
+
+  if (!name || !email || !message) {
+    msgDiv.textContent = "Please fill in all fields.";
+    return;
+  }
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    msgDiv.textContent = "Please enter a valid email.";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://formspree.io/f/xqagyjgd", {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+    if (res.ok) {
+      msgDiv.style.color = 'green';
+      msgDiv.textContent = "Thank you for your message! We'll be in touch.";
+      form.reset();
+    } else {
+      msgDiv.textContent = "Something went wrong. Please try again later.";
+    }
+  } catch {
+    msgDiv.textContent = "Network error. Please try again.";
+  }
+});
+  </script>
   <!-- Header -->
     <div class="header1">
        <h2><a href="https://kampung-kampus.github.io/Herbs-Spices/" target="_blank" rel="noopener noreferrer">Kampung Kampus</a></h2>
