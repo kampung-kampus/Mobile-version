@@ -119,6 +119,24 @@
     <div id="cameraContainer" class="loading">Loading camera feeds...</div>
   </div>
 
+    <!-- Contact Section -->
+  <section id="contact" class="contact section">
+    <h2>Contact Us</h2>
+    <form id="contactForm" novalidate>
+      <label>Name:
+        <input type="text" name="name" required>
+      </label>
+      <label>Email:
+        <input type="email" name="email" required>
+      </label>
+      <label>Message:
+        <textarea name="message" required></textarea>
+      </label>
+      <button type="submit">Send</button>
+      <div id="form-message"></div>
+    </form>
+  </section>
+
   <script>
     async function fetchSelectedCameras(cameraIds) {
       try {
