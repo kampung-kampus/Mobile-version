@@ -6,12 +6,14 @@ Features
 - 📱 Responsive layout using 100vh map container
 
 🛠️ Technologies Used
-|  |  | 
-|  |  | 
-|  |  | 
-|  |  | 
-|  |  | 
-|  |  | 
+ tools
+Leaflet.js - Map rendering and interactivity
+Leaflet.heat - Heatmap overlay support
+OpenStreetMap - Base map tiles
+LTA Datamall API - Real-time traffic data
+GitHub Pages - Static site hosting
+
+
 
 
 
@@ -41,5 +43,5 @@ This project uses the LTA Datamall API directly in the browser. For testing or p
 This project is open-source under the MIT License.
 Attribution required for LTA Datamall and OpenStreetMap data.
 
-Would you like me to help generate a favicon, add a modular legend, or scaffold a docs/ folder for GitHub Pages compatibility?
+ 
 
