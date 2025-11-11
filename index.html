@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Singapore Causeway Traffic</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <title>Singapore Causeway Traffic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  
+
   <style>
     #map { height: 100vh; }
-    
+
     body {
       margin: 0;
       padding: 0;
@@ -40,7 +40,7 @@
     .info button:hover {
       background-color: #0056b3;
     }
-    
+
     .error-message {
       background: #f8d7da;
       color: #721c24;
@@ -49,7 +49,7 @@
       border-radius: 5px;
       margin: 10px;
     }
-    
+
     .loading-message {
       background: #d1ecf1;
       color: #0c5460;
@@ -61,21 +61,15 @@
   </style>
 </head>
 
-  <head>
-  <!-- Leaflet CSS (required for map visuals) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-</head>
-
 <body>
   <div id="map"></div>
 
-<!-- Leaflet JS -->
- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
 <script>
   // Wait for the DOM to be fully loaded
   document.addEventListener('DOMContentLoaded', function() {
