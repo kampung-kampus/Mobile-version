@@ -84,18 +84,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function loadTrafficData() {
-        showLoadingMessage();
-        updateTimestamp();
+ function loadTrafficData() {
+    showLoadingMessage();
+    updateTimestamp();
 
-        // Direct API call with CORS workaround
-        const apiKey = "325y4IwcQU+mqCX5P+D01g==";
+    const apiKey = "325y4IwcQU+mqCX5P+D01g==";
+    const targetUrl = 'https://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBands';
+
+    // Try direct fetch first (might work on some servers)
+    fetch(targetUrl, {
+        headers: {
+            'AccountKey': apiKey,
+            'accept': 'application/json'
+        },
+        mode: 'cors'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        hideErrorMessage();
+        console.log('Direct fetch successful!');
+        processTrafficData(data);
+    })
+    .catch(directError => {
+        console.log('Direct fetch failed, trying CORS proxy:', directError.message);
         
-        // Using a CORS proxy to bypass CORS restrictions
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const targetUrl = 'https://datamall2.mytransport.sg/ltaodataservice/TrafficSpeedBands';
+        // Fallback to CORS proxy
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const fullUrl = proxyUrl + encodeURIComponent(targetUrl);
         
-        fetch(proxyUrl + targetUrl, {
+        fetch(fullUrl, {
             headers: {
                 'AccountKey': apiKey,
                 'accept': 'application/json'
@@ -109,14 +131,16 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             hideErrorMessage();
+            console.log('CORS proxy successful!');
             processTrafficData(data);
         })
-        .catch(error => {
-            console.error('Failed to fetch traffic data:', error);
-            showErrorMessage('Failed to load traffic data. The service might be temporarily unavailable. CORS issue detected.');
+        .catch(proxyError => {
+            console.error('CORS proxy also failed:', proxyError);
+            showErrorMessage('Unable to load traffic data due to CORS restrictions. Please try running this from a local server.');
             updateTimestamp();
         });
-    }
+    });
+}
 
     // Extract data processing into separate function for reuse
     function processTrafficData(data) {
